@@ -22,6 +22,8 @@ If you get a error after running `npm run ios` then make sure that the `Command 
 
 After completing those steps run `npm run ios` again and the simulater should work. 
 
+###DONT FORGET TO MAKE YOUR OWN BRANCH TO DO YOUR EXPERIMENTS!!!!!
+
 
 Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
 
