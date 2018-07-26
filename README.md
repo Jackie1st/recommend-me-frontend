@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React Native App](https://github.com/
 
 Before doing anything please install `Create React Native App`
 
-Next run these following commands: 
+Run these following commands: 
 
 `npm install -g create-react-native-app`
 
