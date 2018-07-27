@@ -6,11 +6,13 @@ Run these following commands:
 
 `npm install -g create-react-native-app`
 
-`sudo sysctl -w kern.maxfiles=5242880`
+CD into project folder
 
-`sudo sysctl -w kern.maxfilesperproc=524288`
+`npm install`
 
 `npm run ios`
+
+A simulator should pop up and you should be able to see the app running correctly.
 
 If you get a error after running `npm run ios` then make sure that the `Command Line Tools` menu option in x-code is set to something. follow these steps to check: 
 
@@ -19,6 +21,11 @@ If you get a error after running `npm run ios` then make sure that the `Command 
 3. select the locations tab
 4. under the `Command Line Tools` select an option. there should only be one but if there isn't it should look something like this: `Xcode 9.4.1 (9f2000)`
 
+If you run into any other errors look for an error saying you need to install these:
+
+`sudo sysctl -w kern.maxfiles=5242880`
+
+`sudo sysctl -w kern.maxfilesperproc=524288`
 
 After completing those steps run `npm run ios` again and the simulater should work. 
 

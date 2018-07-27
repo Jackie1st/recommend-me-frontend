@@ -1,25 +1,31 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 
-export default class App extends React.Component {
+export default class LotsOfStyles extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-        <Text>This should show up.</Text>
-
+      <View>
+        <Text style={[styles.red, styles.center]}>just red</Text>
+        <Text style={[styles.bigblue, styles.center]}>just bigblue</Text>
+        <Text style={[styles.bigblue, styles.red, styles.center]}>bigblue, then red</Text>
+        <Text style={[styles.red, styles.bigblue, styles.center]}>red, then bigblue</Text>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  center: {
+    textAlign: 'center',
+    marginTop: 50
+  },
+
+  bigblue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  red: {
+    color: 'red',
   },
 });
