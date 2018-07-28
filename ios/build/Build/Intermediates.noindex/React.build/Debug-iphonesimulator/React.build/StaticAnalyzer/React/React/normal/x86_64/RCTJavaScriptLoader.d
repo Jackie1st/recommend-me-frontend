@@ -1,0 +1,26 @@
+dependencies: \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTJavaScriptLoader.mm \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTJavaScriptLoader.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTDefines.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/ios/build/Build/Products/Debug-iphonesimulator/include/cxxreact/JSBundleType.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/ios/build/Build/Products/Debug-iphonesimulator/include/jschelpers/JavaScriptCore.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/ios/build/Build/Products/Debug-iphonesimulator/include/jschelpers/JSCWrapper.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTBridge.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTBridgeDelegate.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTBridgeModule.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTFrameUpdate.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTInvalidating.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTConvert.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Views/RCTAnimationType.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Views/RCTBorderStyle.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTLog.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTAssert.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTUtils.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Views/RCTPointerEvents.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Views/RCTTextDecorationLineType.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/Yoga.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGEnums.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/ios/build/Build/Products/Debug-iphonesimulator/include/yoga/YGMacros.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTMultipartDataTask.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTMultipartStreamReader.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/React/Base/RCTPerformanceLogger.h

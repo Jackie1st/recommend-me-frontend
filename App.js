@@ -23,8 +23,6 @@ export class SignIn extends React.Component {
 //       text: this.state.mimin
 //     });
 //   }
-
-
   
   render() {
     return (
@@ -49,7 +47,19 @@ export class SignIn extends React.Component {
     );
   }
 }
+class HomeScreen extends React.Component {
+  render() {
+    return (
 
+     <Button primary title="Go to Details" onPress={() => this.props.navigation.navigate('Details')}><Text> Sign in </Text></Button>
+     <Button primary title="Go to Details" onPress={() => this.props.navigation.navigate('Register')}><Text> Register </Text></Button>
+
+     </Content>
+     </Container>
+
+     );
+  }
+}
 export class DetailsScreen extends React.Component {
   
 
@@ -79,7 +89,8 @@ export class DetailsScreen extends React.Component {
     image: require("./images/4.jpg"),
     url: "https://unsplash.com/photos/89PFnHKg8HE"
   }
-];
+]
+}
 //images are broken and dont know why. 
     return (
       <View style={{ flex: 1 }}>

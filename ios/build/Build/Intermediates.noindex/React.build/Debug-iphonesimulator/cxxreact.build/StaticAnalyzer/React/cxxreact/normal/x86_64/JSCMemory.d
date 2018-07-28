@@ -1,0 +1,5 @@
+dependencies: \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/ReactCommon/cxxreact/JSCMemory.cpp \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/node_modules/react-native/ReactCommon/cxxreact/JSCMemory.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/ios/build/Build/Products/Debug-iphonesimulator/include/jschelpers/JavaScriptCore.h \
+  /Users/winkylocc/Desktop/CodePlatoon/recommend-me-frontend/ios/build/Build/Products/Debug-iphonesimulator/include/jschelpers/JSCWrapper.h
