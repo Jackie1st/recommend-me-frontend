@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import { View, Text, TextInput, Linking, ScrollView} from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'; // Version can be specified in package.json
@@ -240,3 +241,7 @@ export default class App extends React.Component {
     }
   }
 }
+=======
+import App from "./app/index";
+export default App;
+>>>>>>> 8b148d0a18c57712d47aa1f47baca70423eb81b8
