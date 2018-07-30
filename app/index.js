@@ -8,8 +8,14 @@ export default class App extends React.Component {
 
     this.state = {
       signedIn: false,
-      checkedSignIn: false
+      checkedSignIn: false,
+      email: "test@email.com", 
+      
     };
+  }
+
+  componentDidUpdate(){
+    console.log(this.state)
   }
 
   componentDidMount() {
@@ -19,7 +25,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { checkedSignIn, signedIn } = this.state;
+    const { checkedSignIn, signedIn, email } = this.state;
 
     // If we haven't checked AsyncStorage yet, don't render anything (better ways to do this)
     if (!checkedSignIn) {
