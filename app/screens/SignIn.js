@@ -16,11 +16,10 @@ export default class SignIn extends React.Component {
 
   handleChange(event){
     this.setState({text: event});
-    console.log(this.state); 
   }
 
-  componentDidMount() {
-    
+  componentDidUpdate() {
+    console.log(this.state);
   }
 
   render(){
@@ -37,7 +36,6 @@ export default class SignIn extends React.Component {
         backgroundColor="#03A9F4"
         title="SIGN IN"
         onPress={() => {
-          console.log(this.state);
           onSignIn().then(() => this.props.navigation.navigate("SignedIn"));
         }}
       />
