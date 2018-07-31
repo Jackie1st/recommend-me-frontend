@@ -8,14 +8,21 @@ export default class SignIn extends React.Component {
     super(props);
 
     this.state ={
-      text: ""
+      email: "",
+      pass: ""
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleEmail = this.handleEmail.bind(this);
+    this.handlePassword = this.handlePassword.bind(this);
+
   }
 
-  handleChange(event){
-    this.setState({text: event});
+  handleEmail(event){
+    this.setState({email: event});
+  }
+
+  handlePassword(event){
+    this.setState({pass: event});
   }
 
   componentDidUpdate() {
@@ -27,9 +34,9 @@ export default class SignIn extends React.Component {
         <View style={{ paddingVertical: 20 }}>
     <Card>
       <FormLabel >Email</FormLabel>
-      <FormInput value={this.state.text} onChangeText={this.handleChange} placeholder="Email address..." />
+      <FormInput value={this.state.email} onChangeText={this.handleEmail} placeholder="Email address..." />
       <FormLabel>Password</FormLabel>
-      <FormInput secureTextEntry placeholder="Password..." />
+      <FormInput value={this.state.pass} onChangeText={this.handlePassword} secureTextEntry placeholder="Password..." />
 
       <Button
         buttonStyle={{ marginTop: 20 }}
