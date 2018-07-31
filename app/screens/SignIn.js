@@ -37,6 +37,7 @@ export default class SignIn extends React.Component {
         backgroundColor="#03A9F4"
         title="SIGN IN"
         onPress={() => {
+          console.log(this.state);
           onSignIn().then(() => this.props.navigation.navigate("SignedIn"));
         }}
       />
