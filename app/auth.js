@@ -26,3 +26,27 @@ export const isSignedIn = () => {
 // export const handleChange = (event) => {
 //   console.log(event.target.value); 
 // }
+
+//https://reccme.herokuapp.com/oauth/token
+
+const fetchData = (articleID) => {
+  return fetch(`https://reccme.herokuapp.com/`)
+    .then((response) => response.json())
+}
+
+var url = 'https://reccme.herokuapp.com/oauth/token';
+var data = {"email": "testboy@test.com", "password": "testtest", "grant_type": "password"}
+
+fetch(url, {
+  method: 'POST', // or 'PUT'
+  body: JSON.stringify(data), // data can be `string` or {object}!
+  headers:{
+    'Content-Type': 'application/json'
+  }
+}).then(res => res.json())
+.catch(error => console.error('Error:', error))
+.then(response => console.log('Success:', response));
+
+
+
+
