@@ -35,6 +35,3 @@ return fetch(url2, {
 })
 // .then(token => console.log(token.access_token))
 }
-
-
-createUser(); 
