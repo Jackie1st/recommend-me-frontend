@@ -18,49 +18,83 @@ export default class SignUp extends React.Component {
       lastName: "", 
       email: "",
       password: "",
-      confirmPass: ""
+      confirmPass: "", 
+      token: ""
     };
-
-    this.setDate = this.setDate.bind(this);
-    this.handleFirstname = this.handleFirstname.bind(this);
-    this.handleLastName = this.handleLastName.bind(this);
-    this.handleEmail = this.handleEmail.bind(this);
-    this.handlePassword = this.handlePassword.bind(this);
-    this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
+      // this.CreateUserFetch = this.CreateUserFetch.bind(this);
+    // this.setDate = this.setDate.bind(this);
+    // this.handleFirstname = this.handleFirstname.bind(this);
+    // this.handleLastName = this.handleLastName.bind(this);
+    // this.handleEmail = this.handleEmail.bind(this);
+    // this.handlePassword = this.handlePassword.bind(this);
+    // this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
 
 
   }
-  setDate(newDate) {
+  setDate = (newDate) => {
     this.setState({ chosenDate: newDate });
   }
 
-  handleFirstname(event){
+  handleFirstname = (event) => {
     this.setState({firstName: event});
     console.log(this.state); 
   }
 
-  handleLastName(event){
+  handleLastName = (event) => {
     this.setState({lastName: event});
     console.log(this.state); 
   }
 
-  handleEmail(event){
+  handleEmail = (event) => {
     this.setState({email: event});
     console.log(this.state); 
   }
 
-  handlePassword(event){
+  handlePassword = (event) => {
     this.setState({password: event});
     console.log(this.state); 
   }
 
-  handleConfirmPassword(event){
+  handleConfirmPassword = (event) => {
     this.setState({confirmPass: event});
     console.log(this.state); 
   }
 
+  updateToken = (token) =>{
+    this.setState({token: token})
+  }
 
+  CreateUserFetch = async () => {
+    // const fetch = require('node-fetch');
+    console.log(this.state);
+    const url2 = 'https://reccme.herokuapp.com/users';
+    const userData = {"user": {"first_name": this.state.firstName,
+      "last_name": this.state.lastName,
+      "birthdate": this.state.chosenDate,
+      "email": this.state.email,
+      "password": this.state.password
+    }}
+    
 
+    await fetch(url2, {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(userData), // data can be `string` or {object}!
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+      .then(response_json => {
+        console.log(response_json)// this.updateToken(response_json)
+      })
+      if (this.state.token === ""){
+        return alert("Please make sure all fields are populated!")
+      }
+    console.log(this.state);
+    onSignIn(); 
+    this.props.navigation.navigate("SignedIn");
+  }
+
+  
   render() {
     return (
       <Container>
@@ -95,9 +129,7 @@ export default class SignUp extends React.Component {
             buttonStyle={{ marginTop: 20 }}
             backgroundColor="#03A9F4"
             title="SIGN UP"
-            onPress={() => {
-              onSignIn().then(() => this.props.navigation.navigate("SignedIn"));
-            }}
+            onPress={ this.CreateUserFetch }
           />
           <Button
             buttonStyle={{ marginTop: 20 }}

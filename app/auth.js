@@ -1,9 +1,10 @@
 import { AsyncStorage } from "react-native";
 
 export const USER_KEY = "auth-demo-key";
+export const AUTH_TOKEN = "auth-token";
 
-export const onSignIn = () => {
-  return AsyncStorage.setItem(USER_KEY, "true");
+export const onSignIn = (token) => {
+  return AsyncStorage.multiSet([[USER_KEY, "true"],[AUTH_TOKEN, token]]);
 }
 
 export const onSignOut = () => AsyncStorage.removeItem(USER_KEY);

@@ -9,7 +9,7 @@ export default class App extends React.Component {
     this.state = {
       signedIn: false,
       checkedSignIn: false,
-      email: "test@email.com", 
+      token: "", 
       
     };
   }
@@ -20,10 +20,12 @@ export default class App extends React.Component {
     isSignedIn()
       .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
       .catch(err => alert("An error occurred"));
+      console.log(this.state);
   }
 
   render() {
-    const { checkedSignIn, signedIn, email } = this.state;
+    console.log(this.state)
+    const { checkedSignIn, signedIn, token } = this.state;
 
     // If we haven't checked AsyncStorage yet, don't render anything (better ways to do this)
     if (!checkedSignIn) {
