@@ -32,7 +32,7 @@ export default class SignIn extends React.Component {
 
         }
         componentDidMount() {
-            console.log(this.state);
+            // console.log(this.state);
         }
 
         handleEmail = (event) => {
@@ -76,10 +76,9 @@ export default class SignIn extends React.Component {
                 if (this.state.token === undefined){
                   return alert("Please make sure username and password are correct");
                 }
-            console.log(this.state);
+            // console.log(this.state);
             onSignIn(this.state.token);
             this.props.navigation.navigate("SignedIn");
-
         }
 
           render(){

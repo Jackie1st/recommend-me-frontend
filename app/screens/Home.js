@@ -3,44 +3,56 @@ import { ScrollView, Text, Linking, View } from "react-native";
 import { Card, Button } from "react-native-elements";
 import "react-navigation";
 import { AsyncStorage } from "react-native";
-
+import Converter from './converter.js'
 
 export default class Home extends React.Component {
   constructor(props){
     super(props); 
 
     this.state = {
-      token: ""
+      token: "", 
+      recs: {}
     }
+
+    this.getTokenState();
   }
 
-  componentDidMount(){
-    console.log(this.state.token); 
+  componentDidUpdate() {
+    console.log(this.state.recs)
   }
 
-  getTokenState =  () => {
+  getTokenState = () => {
     AsyncStorage.getItem("auth-token").then(token => this.stateSetter(token))
   }
 
   stateSetter = (token) => {
     this.setState({token: token})
+    this.userRecs();
   }
 
-  userRecs =  ()  => {
+  setRecs = (recs) => {
+    this.setState({recs: recs})
+  }
+
+  userRecs = async ()  => {
     const url = `https://reccme.herokuapp.com/api/users/sync`;
-              fetch(url, {
-                    method: 'GET', // or 'PUT'
-                    headers: {
-                     'Cache-Control': 'no-cache',
-                     Authorization: 'Bearer c50246fe10ac8c5d7a7f2388a2602803ad8ff842f5638453c2d14d2c6697a2fe',
-                     'Content-Type': 'application/json' }
-                }).then(res => console.log(res))
+    await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Authorization': `Bearer ${this.state.token}`,
+        'Content-Type': 'application/json' }
+    })
+      .then((res) => res.json()
+      .then(recs => this.setRecs(recs.user_reccs)))
+      // .then(res_json =>  res_json)
+      // .then(text => JSON.parse(text))
+      // .then(jsObj => console.log(jsObj))
   }
 
   render(){
-    const rec = this.userRecs();
-    console.log(rec);
-    console.log(this.state);
+    // console.log(`Here : ${rec}`);
+    const recs = this.state.recs; 
     const images = [
   {
     key: 1,
@@ -70,8 +82,9 @@ export default class Home extends React.Component {
     return(
         <View style={{ flex: 1 }}>
           <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
-            {images.map(({ name, image, url, key }) => (
-              <Card title={`CARD ${key}`} image={image} key={key}>
+            {
+             recs.map(({ name, id}) => (
+              <Card title={`CARD ${id}`} image={require("../images/4.jpg")} key={id}>
                 <Text style={{ marginBottom: 10 }}>
                   Photo by {name}.
                 </Text>
@@ -87,54 +100,4 @@ export default class Home extends React.Component {
       )
   }
 }
-
-
-
-
-// const images = [
-//   {
-//     key: 1,
-//     name: "Nathan Anderson",
-//     image: require("../images/1.jpg"),
-//     url: "https://unsplash.com/photos/C9t94JC4_L8"
-//   },
-//   {
-//     key: 2,
-//     name: "Jamison McAndie",
-//     image: require("../images/2.jpg"),
-//     url: "https://unsplash.com/photos/waZEHLRP98s"
-//   },
-//   {
-//     key: 3,
-//     name: "Alberto Restifo",
-//     image: require("../images/3.jpg"),
-//     url: "https://unsplash.com/photos/cFplR9ZGnAk"
-//   },
-//   {
-//     key: 4,
-//     name: "John Towner",
-//     image: require("../images/4.jpg"),
-//     url: "https://unsplash.com/photos/89PFnHKg8HE"
-//   }
-// ];
-
-// export default () => (
-//   <View style={{ flex: 1 }}>
-//     <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
-//       {images.map(({ name, image, url, key }) => (
-//         <Card title={`CARD ${key}`} image={image} key={key}>
-//           <Text style={{ marginBottom: 10 }}>
-//             Photo by {name}.
-//           </Text>
-//           <Button
-//             backgroundColor="#03A9F4"
-//             title="VIEW NOW"
-//             onPress={() => Linking.openURL(url)}
-//           />
-//         </Card>
-//       ))}
-//     </ScrollView>
-//   </View>
-// );
-
 

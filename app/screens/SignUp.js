@@ -66,7 +66,7 @@ export default class SignUp extends React.Component {
 
   CreateUserFetch = async () => {
     // const fetch = require('node-fetch');
-    console.log(this.state);
+    // console.log(this.state);
     const url2 = 'https://reccme.herokuapp.com/users';
     const userData = {"user": {"first_name": this.state.firstName,
       "last_name": this.state.lastName,
@@ -89,7 +89,7 @@ export default class SignUp extends React.Component {
       if (this.state.token === ""){
         return alert("Please make sure all fields are populated!")
       }
-    console.log(this.state);
+    // console.log(this.state);
     onSignIn(); 
     this.props.navigation.navigate("SignedIn");
   }
