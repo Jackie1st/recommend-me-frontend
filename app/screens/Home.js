@@ -3,8 +3,6 @@ import { ScrollView, Text, Linking, View } from "react-native";
 import { Card, Button } from "react-native-elements";
 import "react-navigation";
 import { AsyncStorage } from "react-native";
-import Converter from './converter.js'
-import {gotRecs} from '../auth.js'
 
 export default class Home extends React.Component {
   constructor(props){
@@ -15,26 +13,23 @@ export default class Home extends React.Component {
       recs: null
     }
     const url = `https://reccme.herokuapp.com/api/users/sync`;
-    fetch(url, {
+    AsyncStorage.getItem("auth-token").then(token => fetch(url, {
       method: 'GET',
       headers: {
         'Cache-Control': 'no-cache',
-        'Authorization': `Bearer 4e072c3e31021a0b11c29b1075794596eb9898534fb042be1349d271734f6317`,
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json' }
-    })
-      .then((res) => res.json()
-      .then((recs) => this.setState({recs: recs.user_reccs})));
+    }))
+      .then((res) => res.json())
+      .then((recs) => this.setState({recs: recs.user_proposals}));
+    
 
     this.getTokenState();
-    // this.userRecs();
   }
 
   componentDidUpdate() {
     console.log(this.state);
   }
-
-
-
 
 
   getTokenState = () => {
@@ -47,34 +42,6 @@ export default class Home extends React.Component {
   }
 
     display = () => {
-
-      const images = [
-  {
-    key: 1,
-    name: "Jone",
-    image: require("../images/1.jpg"),
-    url: "https://unsplash.com/photos/C9t94JC4_L8"
-  },
-  {
-    key: 2,
-    name: "Jamison McAndie",
-    image: require("../images/2.jpg"),
-    url: "https://unsplash.com/photos/waZEHLRP98s"
-  },
-  {
-    key: 3,
-    name: "Alberto Restifo",
-    image: require("../images/3.jpg"),
-    url: "https://unsplash.com/photos/cFplR9ZGnAk"
-  },
-  {
-    key: 4,
-    name: "John Towner",
-    image: require("../images/4.jpg"),
-    url: "https://unsplash.com/photos/89PFnHKg8HE"
-  }
-];
-
 
   if (this.state.recs){
       return (
@@ -113,6 +80,7 @@ export default class Home extends React.Component {
 
   render(){
     const recs = this.state.recs;
+    console.log(this.state)
     // const trying = recs; 
     // const output = trying.user_data; 
     // console.log(`Just the User data: ${output}`)

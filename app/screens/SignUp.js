@@ -21,7 +21,7 @@ export default class SignUp extends React.Component {
       confirmPass: "", 
       token: ""
     };
-      // this.CreateUserFetch = this.CreateUserFetch.bind(this);
+
     // this.setDate = this.setDate.bind(this);
     // this.handleFirstname = this.handleFirstname.bind(this);
     // this.handleLastName = this.handleLastName.bind(this);
@@ -64,9 +64,8 @@ export default class SignUp extends React.Component {
     this.setState({token: token})
   }
 
-  CreateUserFetch = async () => {
+  async createUserFetch(){
     // const fetch = require('node-fetch');
-    // console.log(this.state);
     const url2 = 'https://reccme.herokuapp.com/users';
     const userData = {"user": {"first_name": this.state.firstName,
       "last_name": this.state.lastName,
@@ -75,26 +74,16 @@ export default class SignUp extends React.Component {
       "password": this.state.password
     }}
     
-
     await fetch(url2, {
       method: 'POST', // or 'PUT'
       body: JSON.stringify(userData), // data can be `string` or {object}!
       headers:{
         'Content-Type': 'application/json'
       }
-    }).then(res => res.json())
-      .then(response_json => {
-        console.log(response_json)// this.updateToken(response_json)
-      })
-      if (this.state.token === ""){
-        return alert("Please make sure all fields are populated!")
-      }
-    // console.log(this.state);
-    onSignIn(); 
-    this.props.navigation.navigate("SignedIn");
+    })
   }
 
-  
+
   render() {
     return (
       <Container>
@@ -129,7 +118,9 @@ export default class SignUp extends React.Component {
             buttonStyle={{ marginTop: 20 }}
             backgroundColor="#03A9F4"
             title="SIGN UP"
-            onPress={ this.CreateUserFetch }
+            onPress={async () => {
+             await this.createUserFetch();
+              this.props.navigation.navigate("SignIn")}}
           />
           <Button
             buttonStyle={{ marginTop: 20 }}
