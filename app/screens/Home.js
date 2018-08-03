@@ -4,6 +4,7 @@ import { Card, Button } from "react-native-elements";
 import "react-navigation";
 import { AsyncStorage } from "react-native";
 import Converter from './converter.js'
+import {gotRecs} from '../auth.js'
 
 export default class Home extends React.Component {
   constructor(props){
@@ -11,15 +12,30 @@ export default class Home extends React.Component {
 
     this.state = {
       token: "", 
-      recs: {}
+      recs: null
     }
+    const url = `https://reccme.herokuapp.com/api/users/sync`;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Authorization': `Bearer 4e072c3e31021a0b11c29b1075794596eb9898534fb042be1349d271734f6317`,
+        'Content-Type': 'application/json' }
+    })
+      .then((res) => res.json()
+      .then((recs) => this.setState({recs: recs.user_reccs})));
 
     this.getTokenState();
+    // this.userRecs();
   }
 
   componentDidUpdate() {
-    console.log(this.state.recs)
+    console.log(this.state);
   }
+
+
+
+
 
   getTokenState = () => {
     AsyncStorage.getItem("auth-token").then(token => this.stateSetter(token))
@@ -27,36 +43,15 @@ export default class Home extends React.Component {
 
   stateSetter = (token) => {
     this.setState({token: token})
-    this.userRecs();
+    
   }
 
-  setRecs = (recs) => {
-    this.setState({recs: recs})
-  }
+    display = () => {
 
-  userRecs = async ()  => {
-    const url = `https://reccme.herokuapp.com/api/users/sync`;
-    await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Cache-Control': 'no-cache',
-        'Authorization': `Bearer ${this.state.token}`,
-        'Content-Type': 'application/json' }
-    })
-      .then((res) => res.json()
-      .then(recs => this.setRecs(recs.user_reccs)))
-      // .then(res_json =>  res_json)
-      // .then(text => JSON.parse(text))
-      // .then(jsObj => console.log(jsObj))
-  }
-
-  render(){
-    // console.log(`Here : ${rec}`);
-    const recs = this.state.recs; 
-    const images = [
+      const images = [
   {
     key: 1,
-    name: "",
+    name: "Jone",
     image: require("../images/1.jpg"),
     url: "https://unsplash.com/photos/C9t94JC4_L8"
   },
@@ -79,14 +74,17 @@ export default class Home extends React.Component {
     url: "https://unsplash.com/photos/89PFnHKg8HE"
   }
 ];
-    return(
-        <View style={{ flex: 1 }}>
+
+
+  if (this.state.recs){
+      return (
+          <View style={{ flex: 1 }}>
           <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
             {
-             recs.map(({ name, id}) => (
-              <Card title={`CARD ${id}`} image={require("../images/4.jpg")} key={id}>
+             this.state.recs.map((rec) => (
+              <Card title={`CARD ${rec.id}`} image={require("../images/4.jpg")} key={rec.id}>
                 <Text style={{ marginBottom: 10 }}>
-                  Photo by {name}.
+                  Photo by {rec.name}.
                 </Text>
                 <Button
                   backgroundColor="#03A9F4"
@@ -97,7 +95,40 @@ export default class Home extends React.Component {
             ))}
           </ScrollView>
         </View>
-      )
+        )
+    }else{
+      return (
+          <View style={{ flex: 1 }}>
+          <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
+              <Card >
+                <Text style={{ marginBottom: 10 }}>
+                  Loading...
+                </Text>
+              </Card>
+          </ScrollView>
+        </View>
+        )
+    }
   }
+
+  render(){
+    const recs = this.state.recs;
+    // const trying = recs; 
+    // const output = trying.user_data; 
+    // console.log(`Just the User data: ${output}`)
+    // console.log(`Rendering out recs here: ${this.state.recs}`);
+    console.log(`seeing the recs here: ${recs}`);
+
+    return(
+      <View style={{ flex: 1 }}>
+        {this.display()}
+      </View>
+    )
+
+}
+  
+
+  
+  
 }
 
