@@ -80,7 +80,7 @@ export default class Home extends React.Component {
 
   render(){
     const recs = this.state.recs;
-    console.log(this.state)
+    console.log(this.state);
     // const trying = recs; 
     // const output = trying.user_data; 
     // console.log(`Just the User data: ${output}`)
