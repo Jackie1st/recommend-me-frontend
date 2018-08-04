@@ -98,7 +98,7 @@ export const createRootNavigator = (signedIn = false) => {
       }
     },
     {
-      initialRouteName: false ? "SignedIn" : "SignedOut"
+      initialRouteName: signedIn ? "SignedIn" : "SignedOut"
     }
   );
 };

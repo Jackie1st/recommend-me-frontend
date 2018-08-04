@@ -49,14 +49,14 @@ export default class Home extends React.Component {
           <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
             {
              this.state.recs.map((rec) => (
-              <Card title={`CARD ${rec.id}`} image={require("../images/4.jpg")} key={rec.id}>
+              <Card title={`${rec.location}`} image={require("../images/4.jpg")} key={rec.id}>
                 <Text style={{ marginBottom: 10 }}>
                   Photo by {rec.name}.
                 </Text>
                 <Button
                   backgroundColor="#03A9F4"
                   title="VIEW NOW"
-                  onPress={() => {this.props.navigation.navigate("RecShow", {recId: rec.id});}}
+                  onPress={() => {this.props.navigation.navigate("RecShow", {recId: rec.id, recName: rec.name, recLocation: rec.location, recDescription: rec.description, sender: rec.user_id});}}
                 />
               </Card>
             ))}

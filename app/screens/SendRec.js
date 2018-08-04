@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Icon, Picker, Form } from "native-base";
+import {
+    Card,
+    Button,
+    FormLabel,
+    FormInput
+} from "react-native-elements";
 
 const styles = StyleSheet.create({
    container: {
@@ -31,7 +38,8 @@ class SendRecPage extends Component {
       comment: '',
       location: '',
       rating: '',
-      recommender: ''
+      recommender: '', 
+      selected: undefined, 
     };
   }
 
@@ -39,45 +47,49 @@ class SendRecPage extends Component {
     alert(`title: ${title}, description: ${description}, comment: ${comment}, location: ${location}, rating: ${rating}, recommender: ${recommender}`)
   }
 
+  onValueChange(value: string) {
+    this.setState({
+      selected: value
+    });
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.input}
-          placeholder="Input Recommendation Title"
-          onChangeText={(title) => this.setState({title})}
-          value={this.state.title}/>
-        <TextInput
-          style={styles.input}
-          placeholder="Input Recommendation Description"
-          onChangeText={(description) => this.setState({description})}
-          value={this.state.description}/>
-        <TextInput
-          style={styles.input}
-          placeholder="Input Recommendation Comment"
-          onChangeText={(comment) => this.setState({comment})}
-          value={this.state.comment}/>
-        <TextInput
-          style={styles.input}
-          placeholder="Input recommendation Location"
-          onChangeText={(location) => this.setState({location})}
-          value={this.state.location}/>
-        <TextInput
-          style={styles.input}
-          placeholder="Input recommendation Rating"
-          onChangeText={(rating) => this.setState({rating})}
-          value={this.state.rating}/>
-        <TextInput
-          style={styles.input}
-          placeholder="Input Recommendation recommender"
-          onChangeText={(recommender) => this.setState({recommender})}
-          value={this.state.recommender}/>
-          <TouchableOpacity
-            style = {styles.submitButton}
-            onPress = {() => this.inputs(this.state.title, this.state.description, this.state.comment, this.state.location, this.state.rating, this.state.recommender)}>
-            <Text style = {styles.submitButtonText}> SUBMIT </Text>
-          </TouchableOpacity>
-      </View>
+      <View style={{ paddingVertical: 20 }}>
+        <Card title="Send Reccomendation">
+          <FormLabel >Title Of Rec</FormLabel>
+          <FormInput value={this.state.title} onChangeText={(title) => this.setState({title})} placeholder="Title of Rec..." />
+          <FormLabel>Description</FormLabel>
+          <FormInput value={this.state.description} onChangeText={(description) => this.setState({description})}  placeholder="Description..." />
+          <FormLabel>Location</FormLabel>
+          <FormInput value={this.state.location} onChangeText={(location) => this.setState({location})}  placeholder="Location..." />
+          <FormLabel>Send Rec To:</FormLabel>
+
+          <Picker
+          mode="dropdown"
+          iosIcon={<Icon name="ios-arrow-down-outline" />}
+          placeholder="Select a Person"
+          placeholderStyle={{ color: "#bfc6ea" }}
+          placeholderIconColor="#007aff"
+          style={{ width: undefined }}
+          selectedValue={this.state.selected}
+          onValueChange={this.onValueChange.bind(this)}
+          >
+          <Picker.Item label="Wallet" value="key0" />
+          <Picker.Item label="ATM Card" value="key1" />
+          <Picker.Item label="Debit Card" value="key2" />
+          <Picker.Item label="Credit Card" value="key3" />
+          <Picker.Item label="Net Banking" value="key4" />
+          </Picker>
+
+          <Button
+          buttonStyle={{ marginTop: 20 }}
+          backgroundColor="#03A9F4"
+          title="SEND REC"
+          onPress={() => this.props.navigation.navigate("Home", alert('Reccomendation sent succesfully!'))}
+          />
+        </Card>
+      </View> 
     );
   }
 }
