@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Card, Button, Text } from "react-native-elements";
+import { Card, Button, Text, Header } from "react-native-elements";
 import { onSignOut } from "../auth";
 import { AsyncStorage } from "react-native";
 
@@ -49,6 +49,12 @@ export default class Profile extends React.Component {
     if (this.state.userData){
       return (
           <View style={{ paddingVertical: 20 }}>
+          <Header
+          placement = "left"
+          leftComponent={{ icon: 'menu', color: '#fff' }}
+          centerComponent={{ text: 'Recommend-Me', style: { color: '#fff' } }}
+          rightComponent={{ icon: 'home', color: '#fff' }}
+          />
               <Card title={`${this.state.firstName} ${this.state.lastName}`}>
                         <View
                         style={{

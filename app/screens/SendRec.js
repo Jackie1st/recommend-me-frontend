@@ -43,7 +43,13 @@ class SendRecPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-      <Header />
+      <Header
+      placement = "left"
+      leftComponent={{ icon: 'menu', color: '#fff' }}
+      centerComponent={{ text: 'Recommend-Me', style: { color: '#fff' } }}
+      rightComponent={{ icon: 'home', color: '#fff'}}
+      />
+    
         <TextInput
           style={styles.input}
           placeholder="Input Recommendation Title"
@@ -80,6 +86,7 @@ class SendRecPage extends Component {
             <Text style = {styles.submitButtonText}> SUBMIT </Text>
           </TouchableOpacity>
       </View>
+        
     );
   }
 }

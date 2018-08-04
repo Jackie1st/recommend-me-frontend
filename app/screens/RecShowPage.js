@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import MapView from 'react-native-maps';
 import { Button } from "react-native-elements";
+import { Header } from 'native-base';
 
 const styles = StyleSheet.create({
    container: {
@@ -53,6 +54,12 @@ class ViewRecPage extends Component {
     const recIdNumber = this.props.navigation.getParam('recId')
     return (
       <View style={styles.container}>
+        <Header
+        placement="left"
+        leftComponent={{ icon: 'menu', color: '#fff' }}
+        centerComponent={{ text: 'Recommend-Me', style: { color: '#fff' } }}
+        rightComponent={{ icon: 'home', color: '#fff' }}
+        />
           <Text style={styles.title}>{recIdNumber}</Text>
           <Text style={styles.title}>{this.state.title}</Text>
           <Text style={styles.text}>Description: {this.state.description}</Text>

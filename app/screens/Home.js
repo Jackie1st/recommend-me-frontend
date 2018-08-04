@@ -1,13 +1,13 @@
 import React from "react";
 import { ScrollView, Text, Linking, View } from "react-native";
-import { Card, Button } from "react-native-elements";
+import { Card, Button, Header } from "react-native-elements";
 import "react-navigation";
 import { AsyncStorage } from "react-native";
 
 export default class Home extends React.Component {
   constructor(props){
     super(props); 
-
+    
     this.state = {
       token: "", 
       recs: null
@@ -46,6 +46,11 @@ export default class Home extends React.Component {
   if (this.state.recs){
       return (
           <View style={{ flex: 1 }}>
+          <Header
+          placement="left"
+          leftComponent={{ icon: 'menu', color: '#fff' }}
+          centerComponent={{ text: 'Recommend-Me', style: { color: '#fff' }} }
+          />
           <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
             {
              this.state.recs.map((rec) => (
