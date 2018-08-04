@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Header } from '../../node_modules/react-native-elements';
 
 const styles = StyleSheet.create({
    container: {
@@ -42,6 +43,7 @@ class SendRecPage extends Component {
   render() {
     return (
       <View style={styles.container}>
+      <Header />
         <TextInput
           style={styles.input}
           placeholder="Input Recommendation Title"
