@@ -56,7 +56,7 @@ export default class Home extends React.Component {
                 <Button
                   backgroundColor="#03A9F4"
                   title="VIEW NOW"
-                  onPress={this.getTokenState}
+                  onPress={() => {this.props.navigation.navigate("RecShow", {recId: rec.id});}}
                 />
               </Card>
             ))}

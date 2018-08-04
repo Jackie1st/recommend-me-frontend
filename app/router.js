@@ -11,6 +11,8 @@ import SignUp from "./screens/SignUp";
 import SignIn from "./screens/SignIn";
 import Home from "./screens/Home";
 import Profile from "./screens/Profile";
+import RecShowPage from "./screens/RecShowPage";
+import SendRec from "./screens/SendRec"
 
 const headerStyle = {
   marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
@@ -33,6 +35,16 @@ export const SignedOut = createStackNavigator({
   },
 });
 
+export const IndividualRec = createStackNavigator({
+  RecShow: {
+    screen: RecShowPage,
+    navigationOptions: {
+      title: "My Rec",
+      headerStyle
+    }
+  },
+});
+
 export const SignedIn = createBottomTabNavigator(
   {
     Home: {
@@ -44,6 +56,15 @@ export const SignedIn = createBottomTabNavigator(
         )
       }
     },
+    SendRec: {
+      screen: SendRec,
+      navigationOptions: {
+        tabBarLabel: "Send Rec",
+        tabBarIcon: ({ tintColor }) => (
+          <FontAwesome name="paper-plane" size={30} color={tintColor} />
+        )
+      }
+    },
     Profile: {
       screen: Profile,
       navigationOptions: {
@@ -52,7 +73,7 @@ export const SignedIn = createBottomTabNavigator(
           <FontAwesome name="user" size={30} color={tintColor} />
         )
       }
-    }
+    },
   },
   {
     tabBarOptions: {
@@ -71,6 +92,9 @@ export const createRootNavigator = (signedIn = false) => {
       },
       SignedOut: {
         screen: SignedOut
+      },
+      IndividualRec: {
+        screen: IndividualRec
       }
     },
     {
