@@ -147,7 +147,6 @@ class SendRecPage extends Component {
     if (this.state.userData){
       const senderId = this.state.userData.id; 
 
-      console.log(this.state.userData.id)
       return(
         <View style={{ paddingVertical: 20 }}>
         <Card title="Send Reccomendation">
@@ -204,7 +203,6 @@ class SendRecPage extends Component {
     }
   }
   render() {
-    console.log(this.state)
     return (
       <View style={{ paddingVertical: 20 }}>
         {this.display()}

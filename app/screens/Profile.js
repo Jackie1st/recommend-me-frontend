@@ -85,8 +85,6 @@ export default class Profile extends React.Component {
       }
     }
   render(){
-    console.log(`heres the user data: ${this.state.userData}`)
-    console.log(this.state.firstName[0])
     return(
       <View style={{ paddingVertical: 20 }}>
               {this.display()}

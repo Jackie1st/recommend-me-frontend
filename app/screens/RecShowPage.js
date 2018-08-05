@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import MapView from 'react-native-maps';
 import { Button, Card } from "react-native-elements";
+import { AsyncStorage } from "react-native";
 
 const styles = StyleSheet.create({
    container: {
@@ -47,8 +48,10 @@ class ViewRecPage extends Component {
       rating: 'idk',
       recommender: 'Bob',
       googleApiResponse: null,
+      allUsers: null,
     }
     this.getLatLng();
+    this.getAllUser();
   }
 
   getLatLng = () => {
@@ -64,6 +67,19 @@ class ViewRecPage extends Component {
     .then(response_json => {this.setState({googleApiResponse: response_json})})
   }
 
+  getAllUser = () => {
+    const url = `https://reccme.herokuapp.com/api/users/sync_all`;
+    AsyncStorage.getItem("auth-token").then(token => fetch(url, {
+      method: 'GET',
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json' }
+    }))
+      .then((res) => res.json())
+      .then((users) => this.setState({allUsers: users}));
+  }
+
 
   display = () => {
     const recName = this.props.navigation.getParam('recName');
@@ -72,9 +88,9 @@ class ViewRecPage extends Component {
     const sender = this.props.navigation.getParam('sender');
 
     if (this.state.googleApiResponse){
-    const apiResponse = this.state.googleApiResponse
-    // const latitude = apiResponse.results[0].geometry.location.lat
-    console.log(`Heres it rendering: ${apiResponse.results[0].geometry.location.lat}`)
+      const apiResponse = this.state.googleApiResponse
+      const elementPosition = this.state.allUsers.complete_users_array.map(function(x) {return x.id;}).indexOf(sender);
+      const objectFound = this.state.allUsers.complete_users_array[elementPosition]
       return(
         <View style={{ flex: 1 }}>
       <Card title={recName}>
@@ -98,7 +114,7 @@ class ViewRecPage extends Component {
             </MapView>
 
           <Text style={styles.text}>Rating: {this.state.rating}</Text>
-          <Text style={styles.text}>Recommender: {`User #${sender}`}</Text>
+          <Text style={styles.text}>Recommender: {this.state.allUsers ? `${objectFound.first_name} ${objectFound.last_name}` : ""}</Text>
           <Text style={styles.text}>Comments: {this.state.comment}</Text>
           
           <Button
@@ -131,10 +147,7 @@ class ViewRecPage extends Component {
     }
   }
   render() {
-console.log(this.state)
-    // const recIdNumber = this.props.navigation.getParam('recId');
-     
-    
+
     return (
       <View style={{ flex: 1 }}>
         {this.display()}

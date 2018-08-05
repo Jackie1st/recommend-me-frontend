@@ -37,27 +37,22 @@ export default class SignUp extends React.Component {
 
   handleFirstname = (event) => {
     this.setState({firstName: event});
-    console.log(this.state); 
   }
 
   handleLastName = (event) => {
     this.setState({lastName: event});
-    console.log(this.state); 
   }
 
   handleEmail = (event) => {
     this.setState({email: event});
-    console.log(this.state); 
   }
 
   handlePassword = (event) => {
     this.setState({password: event});
-    console.log(this.state); 
   }
 
   handleConfirmPassword = (event) => {
     this.setState({confirmPass: event});
-    console.log(this.state); 
   }
 
   updateToken = (token) =>{

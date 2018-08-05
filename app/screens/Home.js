@@ -27,11 +27,6 @@ export default class Home extends React.Component {
     this.getTokenState();
   }
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
-
-
   getTokenState = () => {
     AsyncStorage.getItem("auth-token").then(token => this.stateSetter(token))
   }
@@ -41,13 +36,26 @@ export default class Home extends React.Component {
     
   }
 
+
   
 
     display = () => {
 
-  if (this.state.recs){
+  if (!Array.isArray(this.state.recs) || !this.state.recs.length){
       return (
-          <View style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
+          <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
+              <Card title="YOU NEED SOME RECCS!">
+                <Text style={{ marginBottom: 10 }}>
+                  Unfortunately you dont have any reccommedations to show yet. But when you do they will be right Here Waiting on you.
+                </Text>
+              </Card>
+          </ScrollView>
+        </View>    
+      )
+    } else if (this.state.recs){
+      return (
+        <View style={{ flex: 1 }}>
           <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
             {
              this.state.recs.map((rec) => (
@@ -63,9 +71,10 @@ export default class Home extends React.Component {
               </Card>
             ))}
           </ScrollView>
-        </View>
-        )
-    }else{
+        </View>    
+      )
+    }
+    else{
       return (
           <View style={{ flex: 1 }}>
           <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
@@ -81,13 +90,8 @@ export default class Home extends React.Component {
   }
 
   render(){
-    const recs = this.state.recs;
     console.log(this.state);
-    // const trying = recs; 
-    // const output = trying.user_data; 
-    // console.log(`Just the User data: ${output}`)
-    // console.log(`Rendering out recs here: ${this.state.recs}`);
-    console.log(`seeing the recs here: ${recs}`);
+    const recs = this.state.recs;
 
     return(
       <View style={{ flex: 1 }}>

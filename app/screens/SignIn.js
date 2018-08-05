@@ -31,9 +31,7 @@ export default class SignIn extends React.Component {
             // this.updateToken = this.updateToken.bind(this); 
 
         }
-        componentDidMount() {
-            // console.log(this.state);
-        }
+        
 
         handleEmail = (event) => {
             this.setState({
@@ -76,7 +74,7 @@ export default class SignIn extends React.Component {
                 if (this.state.token === undefined){
                   return alert("Please make sure username and password are correct");
                 }
-            // console.log(this.state);
+            
             onSignIn(this.state.token);
             this.props.navigation.navigate("SignedIn");
         }
