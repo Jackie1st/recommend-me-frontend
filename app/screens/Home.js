@@ -10,7 +10,7 @@ export default class Home extends React.Component {
 
     this.state = {
       token: "", 
-      recs: null
+      recs: null, 
     }
     const url = `https://reccme.herokuapp.com/api/users/sync`;
     AsyncStorage.getItem("auth-token").then(token => fetch(url, {
@@ -40,6 +40,8 @@ export default class Home extends React.Component {
     this.setState({token: token})
     
   }
+
+  
 
     display = () => {
 
