@@ -50,9 +50,25 @@ class ViewRecPage extends Component {
       recommender: 'Bob',
       googleApiResponse: null,
       allUsers: null,
+      comments: null
     }
     this.getLatLng();
     this.getAllUser();
+    this.getAllComments(); 
+  }
+
+  getAllComments = async () => {
+    const url = `https://reccme.herokuapp.com/api/reccs/${this.state.recId}/sync_comments`;
+    await AsyncStorage.getItem("auth-token").then(token => fetch(url, {
+      method: 'GET',
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    }))
+      .then((res) => res.json()
+      .then((allComments) => this.setState({comments: allComments.recc_comments})));
   }
 
   getLatLng = () => {
@@ -97,7 +113,8 @@ class ViewRecPage extends Component {
       const objectFound = this.state.allUsers.complete_users_array[elementPosition]
       return(
         <View style={{ flex: 1 }}>
-      <Card title={recName}>
+      <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
+
       
           <Text style={styles.text}>Description: {recDescription}</Text>
           <Text style={styles.text}>Location: {recLocation}</Text>
@@ -119,7 +136,8 @@ class ViewRecPage extends Component {
 
           <Text style={styles.text}>Rating: {this.state.rating}</Text>
           <Text style={styles.text}>Recommender: {this.state.allUsers ? `${objectFound.first_name} ${objectFound.last_name}` : ""}</Text>
-          <Text style={styles.text}>Comments: <Comments userId={objectFound.id} recId={recId} /></Text>
+          <Text style={styles.text}>Comments: </Text>
+          <Comments userId={objectFound.id} recId={recId} userId={userId} comments={this.state.comments} />
           
           <Button
                   backgroundColor="#03A9F4"
@@ -133,7 +151,7 @@ class ViewRecPage extends Component {
                   style={{paddingTop: 20, paddingBottom: 20}}
                   onPress={() => this.props.navigation.navigate("Home")}
                 />
-            </Card>
+            </ScrollView>
       </View>
       )
     }else{

@@ -9,16 +9,60 @@ export default class Comments extends React.Component {
     super(props);
 
     this.state = {
-      comment: "",
+      comments: this.props.comments,
+      recId: this.props.recId 
     }
+    this.getAllComments(); 
   }
 
+  getAllComments = () => {
+    const url = `https://reccme.herokuapp.com/api/reccs/${this.state.recId}/sync_comments`;
+    AsyncStorage.getItem("auth-token").then(token => fetch(url, {
+      method: 'GET',
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    }))
+      .then((res) => res.json()
+      .then((allComments) => this.setState({comments: allComments.recc_comments})));
+  }
+
+  display = () => {
+    if (this.state.comments){
+      return(
+        <View style={{ flex: 1 }}>
+       
+          {
+            this.state.comments.map((comment) => (
+              // <Card title={`${comment.user_id}`} key={comment.id}>
+                <Text style={{ marginBottom: 10 }} key={comment.id} >
+                  {comment.comment_text}
+                </Text>
+                
+              // </Card>
+            ))
+          }
+    
+        </View> 
+      )
+    }
+    else if(!Array.isArray(this.state.comments) || !this.state.comments.length){
+      return(
+        <View>
+          <Text>
+            "No comments"
+          </Text>
+        </View>
+      )
+    }
+  }
   render(){
+    console.log(this.state.comments)
     return(
       <View>
-        <Text>
-          Testing the comments!!!!!
-        </Text>
+        {this.display()}
       </View>
     )
   }
