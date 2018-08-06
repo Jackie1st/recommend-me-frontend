@@ -1,13 +1,7 @@
-// import { View } from "react-native";
-// import { Card, Button, FormLabel, FormInput } from "react-native-elements";
-// import DatePicker from 'native-base';
-
-// import React from "react";
 import { onSignIn } from "../auth";
 import React, { Component } from 'react';
 import { Container, Header, Content, DatePicker, Text } from 'native-base';
 import { Card, Button, FormLabel, FormInput } from "react-native-elements";
-
 
 export default class SignUp extends React.Component {
   constructor(props) {
@@ -21,16 +15,8 @@ export default class SignUp extends React.Component {
       confirmPass: "", 
       token: ""
     };
-
-    // this.setDate = this.setDate.bind(this);
-    // this.handleFirstname = this.handleFirstname.bind(this);
-    // this.handleLastName = this.handleLastName.bind(this);
-    // this.handleEmail = this.handleEmail.bind(this);
-    // this.handlePassword = this.handlePassword.bind(this);
-    // this.handleConfirmPassword = this.handleConfirmPassword.bind(this);
-
-
   }
+
   setDate = (newDate) => {
     this.setState({ chosenDate: newDate });
   }
@@ -60,7 +46,6 @@ export default class SignUp extends React.Component {
   }
 
   async createUserFetch(){
-    // const fetch = require('node-fetch');
     const url2 = 'https://reccme.herokuapp.com/users';
     const userData = {"user": {"first_name": this.state.firstName,
       "last_name": this.state.lastName,
@@ -70,8 +55,8 @@ export default class SignUp extends React.Component {
     }}
     
     await fetch(url2, {
-      method: 'POST', // or 'PUT'
-      body: JSON.stringify(userData), // data can be `string` or {object}!
+      method: 'POST',
+      body: JSON.stringify(userData),
       headers:{
         'Content-Type': 'application/json'
       }
@@ -91,18 +76,18 @@ export default class SignUp extends React.Component {
           <FormLabel>Email</FormLabel>
           <FormInput value={this.state.email} onChangeText={this.handleEmail} placeholder="Email address..." />
           <DatePicker
-              defaultDate={new Date(2018, 4, 4)}
-              minimumDate={new Date(2018, 1, 1)}
-              maximumDate={new Date(2018, 12, 31)}
-              locale={"en"}
-              timeZoneOffsetInMinutes={undefined}
-              modalTransparent={false}
-              animationType={"fade"}
-              androidMode={"default"}
-              placeHolderText="Select date of birth"
-              textStyle={{ color: "green" }}
-              placeHolderTextStyle={{ color: "#d3d3d3" }}
-              onDateChange={this.setDate}
+            defaultDate={new Date(2018, 4, 4)}
+            minimumDate={new Date(2018, 1, 1)}
+            maximumDate={new Date(2018, 12, 31)}
+            locale={"en"}
+            timeZoneOffsetInMinutes={undefined}
+            modalTransparent={false}
+            animationType={"fade"}
+            androidMode={"default"}
+            placeHolderText="Select date of birth"
+            textStyle={{ color: "green" }}
+            placeHolderTextStyle={{ color: "#d3d3d3" }}
+            onDateChange={this.setDate}
           />
           <FormLabel>Password</FormLabel>
           <FormInput value={this.state.password} onChangeText={this.handlePassword} secureTextEntry placeholder="Password..." />
@@ -114,8 +99,8 @@ export default class SignUp extends React.Component {
             backgroundColor="#03A9F4"
             title="SIGN UP"
             onPress={async () => {
-             await this.createUserFetch();
-              this.props.navigation.navigate("SignIn")}}
+            await this.createUserFetch();
+            this.props.navigation.navigate("SignIn")}}
           />
           <Button
             buttonStyle={{ marginTop: 20 }}
@@ -129,4 +114,3 @@ export default class SignUp extends React.Component {
     );
   }
 }
-

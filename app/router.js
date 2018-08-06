@@ -12,7 +12,8 @@ import SignIn from "./screens/SignIn";
 import Home from "./screens/Home";
 import Profile from "./screens/Profile";
 import RecShowPage from "./screens/RecShowPage";
-import SendRec from "./screens/SendRec"
+import SendRec from "./screens/SendRec";
+import MakeComment from './screens/makeComment'
 
 const headerStyle = {
   marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
@@ -40,6 +41,13 @@ export const IndividualRec = createStackNavigator({
     screen: RecShowPage,
     navigationOptions: {
       title: "My Rec",
+      headerStyle
+    }
+  },
+  makeCommentPage: {
+    screen: MakeComment,
+    navigationOptions: {
+      title: "Comment",
       headerStyle
     }
   },

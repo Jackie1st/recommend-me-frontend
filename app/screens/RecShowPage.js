@@ -3,38 +3,39 @@ import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import MapView from 'react-native-maps';
 import { Button, Card } from "react-native-elements";
 import { AsyncStorage } from "react-native";
+import Comments from './comments.js'; 
 
 const styles = StyleSheet.create({
-   container: {
-      paddingTop: 23
-   },
-   title: {
-      marginTop: 20,
-      textAlign: 'center',
-      color: 'blue',
-      fontWeight: 'bold',
-      fontSize: 20
-   },
-   text: {
-      marginTop: 15,
-      textAlign: 'left',
-      fontSize: 12
-   },
-   map: {
-      width: '100%',
-      height: '40%'
-   },
-   backButton: {
-      backgroundColor: '#7a42f4',
-      padding: 10,
-      margin: 15,
-      height: 40,
-      width: '25%'
-   },
-   backButtonText:{
-      color: 'white',
-      textAlign: 'center'
-   }
+  container: {
+    paddingTop: 23
+  },
+  title: {
+    marginTop: 20,
+    textAlign: 'center',
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 20
+  },
+  text: {
+    marginTop: 15,
+    textAlign: 'left',
+    fontSize: 12
+  },
+  map: {
+    width: '100%',
+    height: '40%'
+  },
+  backButton: {
+    backgroundColor: '#7a42f4',
+    padding: 10,
+    margin: 15,
+    height: 40,
+    width: '25%'
+  },
+  backButtonText:{
+    color: 'white',
+    textAlign: 'center'
+  }
 })
 
 class ViewRecPage extends Component {
@@ -74,7 +75,8 @@ class ViewRecPage extends Component {
       headers: {
         'Cache-Control': 'no-cache',
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json' }
+        'Content-Type': 'application/json'
+      }
     }))
       .then((res) => res.json())
       .then((users) => this.setState({allUsers: users}));
@@ -85,7 +87,9 @@ class ViewRecPage extends Component {
     const recName = this.props.navigation.getParam('recName');
     const recLocation = this.props.navigation.getParam('recLocation');
     const recDescription = this.props.navigation.getParam('recDescription');
+    const recId = this.props.navigation.getParam('recId');
     const sender = this.props.navigation.getParam('sender');
+    const userId = this.props.navigation.getParam('userId');
 
     if (this.state.googleApiResponse){
       const apiResponse = this.state.googleApiResponse
@@ -115,13 +119,13 @@ class ViewRecPage extends Component {
 
           <Text style={styles.text}>Rating: {this.state.rating}</Text>
           <Text style={styles.text}>Recommender: {this.state.allUsers ? `${objectFound.first_name} ${objectFound.last_name}` : ""}</Text>
-          <Text style={styles.text}>Comments: {this.state.comment}</Text>
+          <Text style={styles.text}>Comments: <Comments userId={objectFound.id} recId={recId} /></Text>
           
           <Button
                   backgroundColor="#03A9F4"
                   title="COMMENT"
                   style={{paddingTop: 20, paddingBottom: 20}}
-                  // onPress={}
+                  onPress={() => this.props.navigation.navigate("makeCommentPage", {recId: recId, userId: userId})}
                 />
           <Button
                   backgroundColor="#03A9F4"
@@ -147,7 +151,6 @@ class ViewRecPage extends Component {
     }
   }
   render() {
-
     return (
       <View style={{ flex: 1 }}>
         {this.display()}
