@@ -13,7 +13,8 @@ import Home from "./screens/Home";
 import Profile from "./screens/Profile";
 import RecShowPage from "./screens/RecShowPage";
 import SendRec from "./screens/SendRec";
-import MakeComment from './screens/makeComment'
+import MakeComment from './screens/makeComment';
+import SentRecs from './screens/SentRecs';
 
 const headerStyle = {
   marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
@@ -73,6 +74,15 @@ export const SignedIn = createBottomTabNavigator(
         )
       }
     },
+    SentRecs: {
+      screen: SentRecs,
+      navigationOptions: {
+        tabBarLabel: "Sent Recs",
+        tabBarIcon: ({ tintColor }) => (
+          <FontAwesome name="folder" size={30} color={tintColor} />
+        )
+      }
+    },
     Profile: {
       screen: Profile,
       navigationOptions: {
@@ -106,7 +116,7 @@ export const createRootNavigator = (signedIn = false) => {
       }
     },
     {
-      initialRouteName: false ? "SignedIn" : "SignedOut"
+      initialRouteName: signedIn ? "SignedIn" : "SignedOut"
     }
   );
 };

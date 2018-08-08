@@ -107,7 +107,7 @@ class ViewRecPage extends Component {
     const usersList = this.props.navigation.getParam('allUsers');
       const elementPosition = usersList.map(function(x) {return x.id;}).indexOf(sender);
       const objectFound = usersList[elementPosition]
-      console.log(usersList);
+      
 
       const getName = (user_id) => {
         const position = usersList.map(function(x) {return x.id;}).indexOf(user_id);
@@ -159,7 +159,7 @@ class ViewRecPage extends Component {
                   backgroundColor="#03A9F4"
                   title="COMMENT"
                   style={{paddingTop: 10, paddingBottom: 10}}
-                  onPress={() => this.props.navigation.navigate("makeCommentPage", {recId: recId, userId: userId})}
+                  onPress={() => this.props.navigation.navigate("makeCommentPage", {recId: recId, userId: this.props.navigation.getParam('userId')})}
                 />
           <Button
                   backgroundColor="#03A9F4"

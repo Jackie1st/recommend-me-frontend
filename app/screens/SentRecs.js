@@ -4,13 +4,13 @@ import { Card, Button } from "react-native-elements";
 import "react-navigation";
 import { AsyncStorage } from "react-native";
 
-export default class Home extends React.Component {
+export default class SentRecs extends React.Component {
   constructor(props){
     super(props); 
 
     this.state = {
       token: "", 
-      userSentRecs: null,
+      recs: null,
       userId: null, 
       data: null,
       allUsers: null, 
@@ -44,23 +44,23 @@ export default class Home extends React.Component {
     if (this.state.data){
       const allData = this.state.data
       const recs = [];
-      console.log(this.state.data.user_proposals.length);
-      for (let i = 0; i < allData.user_proposals.length; i++){
-        const elementPosition = this.state.allUsers.map(function(x) {return x.id;}).indexOf(allData.user_proposals[i][0].user_id);
+      console.log(this.state.data.user_reccs.length);
+      for (let i = 0; i < allData.user_reccs.length; i++){
+        const elementPosition = this.state.allUsers.map(function(x) {return x.id;}).indexOf(allData.user_reccs[i][0].user_id);
         const objectFound = this.state.allUsers[elementPosition]
         recs.push(
-          <Card title={`${allData.user_proposals[i][0].name}`} image={require("../images/4.jpg")} key={`${allData.user_proposals[i][0].id}`}>
+          <Card title={`${allData.user_reccs[i][0].name}`} image={require("../images/2.jpg")} key={`${allData.user_reccs[i][0].id}`}>
                 <Text style={{ marginBottom: 10 }}>
                   {this.state.allUsers ? `Recommended by: ${objectFound.first_name} ${objectFound.last_name}` : ''}
                 </Text>
                 <Button
                   backgroundColor="#03A9F4"
                   title="VIEW NOW"
-                  onPress={() => {this.props.navigation.navigate("RecShow", {comments: allData.user_proposals[i][1],recName: allData.user_proposals[i][0].name, recLocation: allData.user_proposals[i][0].location, recDescription: allData.user_proposals[i][0].description, recId: allData.user_proposals[i][0].id, sender: allData.user_proposals[i][0].user_id, allUsers: this.state.allUsers, userId: this.state.userId});}}
+                  onPress={() => {this.props.navigation.navigate("RecShow", {comments: allData.user_reccs[i][1],recName: allData.user_reccs[i][0].name, recLocation: allData.user_reccs[i][0].location, recDescription: allData.user_reccs[i][0].description, recId: allData.user_reccs[i][0].id, sender: allData.user_reccs[i][0].user_id, allUsers: this.state.allUsers, userId: this.state.userId});}}
                 />
               </Card>
         );
-        console.log(allData.user_proposals[i][0]);
+        
       }
     
     return recs

@@ -39,7 +39,7 @@ export default class MakeComment extends React.Component {
         <View style={{ flex: 1 }}>
           <Card title="Make a Comment">
             <FormLabel >Enter Comment:</FormLabel>
-            <FormInput width= "100%" multiline={true} value={this.state.comment} onChangeText={(comment) => this.setState({comment})} placeholder="Comment goes here..." />
+            <FormInput maxLength = {250} width= "100%" multiline={true} value={this.state.comment} onChangeText={(comment) => this.setState({comment})} placeholder="Comment goes here..." />
             <Button
               buttonStyle={{ marginTop: 20 }}
               backgroundColor="#03A9F4"
