@@ -19,11 +19,15 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 15,
     textAlign: 'left',
-    fontSize: 12
+    fontSize: 16
+  },
+  commentTitle: {
+    fontSize: 16,
+    fontWeight: 'bold'
   },
   map: {
     width: '100%',
-    height: '40%'
+    height: '30%'
   },
   backButton: {
     backgroundColor: '#7a42f4',
@@ -42,34 +46,28 @@ class ViewRecPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      title: 'Testing123',
-      description: 'this is a rough draft',
-      comment: 'blah blah blah',
-      location: 'China Town',
-      rating: 'idk',
-      recommender: 'Bob',
       googleApiResponse: null,
-      allUsers: null,
-      comments: null
+      allUsers: this.props.navigation.getParam('allUsers'),
+      comments: this.props.navigation.getParam('comments')
     }
     this.getLatLng();
-    this.getAllUser();
-    this.getAllComments(); 
+    // this.getAllUser();
+    // this.getAllComments(); 
   }
 
-  getAllComments = async () => {
-    const url = `https://reccme.herokuapp.com/api/reccs/${this.state.recId}/sync_comments`;
-    await AsyncStorage.getItem("auth-token").then(token => fetch(url, {
-      method: 'GET',
-      headers: {
-        'Cache-Control': 'no-cache',
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    }))
-      .then((res) => res.json()
-      .then((allComments) => this.setState({comments: allComments.recc_comments})));
-  }
+  // getAllComments = async () => {
+  //   const url = `https://reccme.herokuapp.com/api/reccs/${this.state.recId}/sync_comments`;
+  //   await AsyncStorage.getItem("auth-token").then(token => fetch(url, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Cache-Control': 'no-cache',
+  //       'Authorization': `Bearer ${token}`,
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }))
+  //     .then((res) => res.json()
+  //     .then((allComments) => this.setState({comments: allComments.recc_comments})));
+  // }
 
   getLatLng = () => {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${this.props.navigation.getParam('recLocation')}&key=AIzaSyCDCTxn5r6lLxw9UsV-4ikuXxhP_q1fVys`
@@ -84,19 +82,19 @@ class ViewRecPage extends Component {
     .then(response_json => {this.setState({googleApiResponse: response_json})})
   }
 
-  getAllUser = () => {
-    const url = `https://reccme.herokuapp.com/api/users/sync_all`;
-    AsyncStorage.getItem("auth-token").then(token => fetch(url, {
-      method: 'GET',
-      headers: {
-        'Cache-Control': 'no-cache',
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    }))
-      .then((res) => res.json())
-      .then((users) => this.setState({allUsers: users}));
-  }
+  // getAllUser = () => {
+  //   const url = `https://reccme.herokuapp.com/api/users/sync_all`;
+  //   AsyncStorage.getItem("auth-token").then(token => fetch(url, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Cache-Control': 'no-cache',
+  //       'Authorization': `Bearer ${token}`,
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }))
+  //     .then((res) => res.json())
+  //     .then((users) => this.setState({allUsers: users}));
+  // }
 
 
   display = () => {
@@ -106,20 +104,21 @@ class ViewRecPage extends Component {
     const recId = this.props.navigation.getParam('recId');
     const sender = this.props.navigation.getParam('sender');
     const userId = this.props.navigation.getParam('userId');
+    const usersList = this.props.navigation.getParam('allUsers');
+      const elementPosition = usersList.map(function(x) {return x.id;}).indexOf(sender);
+      const objectFound = usersList[elementPosition]
+      console.log(usersList);
+
+      const getName = (user_id) => {
+        const position = usersList.map(function(x) {return x.id;}).indexOf(user_id);
+        const found = usersList[position]
+        return `${found.first_name} ${found.last_name}`
+      }
 
     if (this.state.googleApiResponse){
       const apiResponse = this.state.googleApiResponse
-      const elementPosition = this.state.allUsers.complete_users_array.map(function(x) {return x.id;}).indexOf(sender);
-      const objectFound = this.state.allUsers.complete_users_array[elementPosition]
       return(
         <View style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
-
-      
-          <Text style={styles.text}>Description: {recDescription}</Text>
-          <Text style={styles.text}>Location: {recLocation}</Text>
-          <Text style={styles.text}>Address: {apiResponse.results[0].formatted_address}</Text>
-
             <MapView style = {styles.map}
               region = {{
                 latitude: apiResponse.results[0].geometry.location.lat,
@@ -131,24 +130,41 @@ class ViewRecPage extends Component {
                   coordinate = {{
                     latitude: apiResponse.results[0].geometry.location.lat,
                     longitude: apiResponse.results[0].geometry.location.lng }}
-                  title = {this.state.title} />
+                  title = {`${apiResponse.results[0].geometry.location.lat}, ${apiResponse.results[0].geometry.location.lng}`} />
             </MapView>
+      <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
+        <Card>
+          <Text style={styles.text}>Address: {apiResponse.results[0].formatted_address}</Text>
+          <Text style={styles.text}>Description: {recDescription}</Text>
+          <Text style={styles.text}>Location: {recLocation}</Text>
 
-          <Text style={styles.text}>Rating: {this.state.rating}</Text>
           <Text style={styles.text}>Recommender: {this.state.allUsers ? `${objectFound.first_name} ${objectFound.last_name}` : ""}</Text>
-          <Text style={styles.text}>Comments: </Text>
-          <Comments userId={objectFound.id} recId={recId} userId={userId} comments={this.state.comments} />
+        </Card>
+        <Card>
+          <Text style={styles.commentTitle}>Comments: </Text>
+        </Card>
+          {
+            
+            this.props.navigation.getParam('comments').map((comment) => (
+              <Card title={getName(comment.user_id)} key={comment.id}>
+                <Text style={{ marginBottom: 10 }}>
+                  {comment.comment_text}
+                </Text>
+                
+              </Card>
+            ))
+          }
           
           <Button
                   backgroundColor="#03A9F4"
                   title="COMMENT"
-                  style={{paddingTop: 20, paddingBottom: 20}}
+                  style={{paddingTop: 10, paddingBottom: 10}}
                   onPress={() => this.props.navigation.navigate("makeCommentPage", {recId: recId, userId: userId})}
                 />
           <Button
                   backgroundColor="#03A9F4"
                   title="BACK"
-                  style={{paddingTop: 20, paddingBottom: 20}}
+                  style={{paddingTop: 10, paddingBottom: 10}}
                   onPress={() => this.props.navigation.navigate("Home")}
                 />
             </ScrollView>

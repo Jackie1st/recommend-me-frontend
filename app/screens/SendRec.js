@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Linking, ScrollView, Text, TextInput, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Linking, ScrollView, Text, TextInput, View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Icon, Picker, Form } from "native-base";
 import {Card,Button,FormLabel,FormInput} from "react-native-elements";
 import { AsyncStorage } from "react-native";
@@ -136,6 +136,7 @@ class SendRecPage extends Component {
       const senderId = this.state.userData.id; 
 
       return(
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={{ paddingVertical: 20 }}>
           <Card title="Send Reccomendation">
             <FormLabel >Title Of Rec</FormLabel>
@@ -172,6 +173,7 @@ class SendRecPage extends Component {
             />
           </Card>
         </View>
+        </TouchableWithoutFeedback>
       )
     }else{
       return (

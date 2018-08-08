@@ -12,6 +12,8 @@ export default class Home extends React.Component {
       token: "", 
       recs: null,
       userId: null, 
+      data: null,
+      allUsers: null, 
     }
     const url = `https://reccme.herokuapp.com/api/users/sync`;
     AsyncStorage.getItem("auth-token").then(token => fetch(url, {
@@ -22,7 +24,7 @@ export default class Home extends React.Component {
       'Content-Type': 'application/json' }
     }))
     .then((res) => res.json())
-    .then((recs) => this.setState({recs: recs.user_proposals, userId: recs.user_data.id}));
+    .then((userRecData) => this.setState({data: userRecData, allUsers: userRecData.user_data_all}));
 
     this.getTokenState();
   }
@@ -35,50 +37,35 @@ export default class Home extends React.Component {
     this.setState({token: token})
   }
 
+  
 
-
-
-  display = () => {
-
-    if (!Array.isArray(this.state.recs) || !this.state.recs.length){
-    return (
-      <View style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
-          <Card title="YOU NEED SOME RECCS!">
-            <Text style={{ marginBottom: 10 }}>
-              Unfortunately you dont have any reccommedations to show yet. But when you do they will be right Here Waiting on you.
-            </Text>
-          </Card>
-        </ScrollView>
-      </View>    
-    )
-    } 
-    else if (this.state.recs){
-      console.log(this.state)
-      return (
-        <View style={{ flex: 1 }}>
-          <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
-          {
-            this.state.recs.map((rec) => (
-              <Card title={`${rec.location}`} image={require("../images/4.jpg")} key={rec.id}>
+  displayed = () => {
+    
+    if (this.state.data){
+      const allData = this.state.data
+      const recs = [];
+      console.log(this.state.data.user_proposals.length);
+      for (let i = 0; i < allData.user_proposals.length; i++){
+        const elementPosition = this.state.allUsers.map(function(x) {return x.id;}).indexOf(allData.user_proposals[i][0].user_id);
+        const objectFound = this.state.allUsers[elementPosition]
+        recs.push(
+          <Card title={`${allData.user_proposals[i][0].name}`} image={require("../images/4.jpg")} key={`${allData.user_proposals[i][0].id}`}>
                 <Text style={{ marginBottom: 10 }}>
-                  Photo by {rec.name}.
+                  {this.state.allUsers ? `Recommended by: ${objectFound.first_name} ${objectFound.last_name}` : ''}
                 </Text>
                 <Button
                   backgroundColor="#03A9F4"
                   title="VIEW NOW"
-                  onPress={() => {this.props.navigation.navigate("RecShow", {recId: rec.id, recName: rec.name, recLocation: rec.location, recDescription: rec.description, sender: rec.user_id, userId: this.state.userId});}}
+                  onPress={() => {this.props.navigation.navigate("RecShow", {comments: allData.user_proposals[i][1],recName: allData.user_proposals[i][0].name, recLocation: allData.user_proposals[i][0].location, recDescription: allData.user_proposals[i][0].description, recId: allData.user_proposals[i][0].id, sender: allData.user_proposals[i][0].user_id, allUsers: this.state.allUsers});}}
                 />
               </Card>
-            ))
-          }
-          </ScrollView>
-        </View>    
-      )
-    }
-    else{
-      return (
-        <View style={{ flex: 1 }}>
+        );
+        console.log(allData.user_proposals[i][0]);
+      }
+    
+    return recs
+    }else{
+      <View style={{ flex: 1 }}>
           <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
             <Card >
               <Text style={{ marginBottom: 10 }}>
@@ -87,14 +74,15 @@ export default class Home extends React.Component {
             </Card>
           </ScrollView>
         </View>
-      )
     }
   }
 
   render(){
     return(
       <View style={{ flex: 1 }}>
-        {this.display()}
+        <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
+          {this.displayed()}
+        </ScrollView>
       </View>
     )
   }

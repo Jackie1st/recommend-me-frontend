@@ -60,7 +60,7 @@ export default class SignUp extends React.Component {
       headers:{
         'Content-Type': 'application/json'
       }
-    })
+    }).catch(reason => {alert('Something went wrong. Please make sure all fields are populated. ')})
   }
 
 
@@ -75,9 +75,10 @@ export default class SignUp extends React.Component {
           <FormInput value={this.state.lastName} onChangeText={this.handleLastName} placeholder="Last Name..." />
           <FormLabel>Email</FormLabel>
           <FormInput value={this.state.email} onChangeText={this.handleEmail} placeholder="Email address..." />
+          <FormLabel>Date of Birth</FormLabel>
           <DatePicker
             defaultDate={new Date(2018, 4, 4)}
-            minimumDate={new Date(2018, 1, 1)}
+            minimumDate={new Date(1966, 1, 1)}
             maximumDate={new Date(2018, 12, 31)}
             locale={"en"}
             timeZoneOffsetInMinutes={undefined}
@@ -85,8 +86,8 @@ export default class SignUp extends React.Component {
             animationType={"fade"}
             androidMode={"default"}
             placeHolderText="Select date of birth"
-            textStyle={{ color: "green" }}
-            placeHolderTextStyle={{ color: "#d3d3d3" }}
+            textStyle={{ color: "green", paddingLeft: 20 }}
+            placeHolderTextStyle={{ color: "#d3d3d3", paddingLeft: 20 }}
             onDateChange={this.setDate}
           />
           <FormLabel>Password</FormLabel>
@@ -100,7 +101,7 @@ export default class SignUp extends React.Component {
             title="SIGN UP"
             onPress={async () => {
             await this.createUserFetch();
-            this.props.navigation.navigate("SignIn")}}
+            this.props.navigation.navigate("SignIn", alert('User created. Please sign in.'))}}
           />
           <Button
             buttonStyle={{ marginTop: 20 }}
