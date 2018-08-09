@@ -49,7 +49,7 @@ export default class Home extends React.Component {
         const elementPosition = this.state.allUsers.map(function(x) {return x.id;}).indexOf(allData.user_proposals[i][0].user_id);
         const objectFound = this.state.allUsers[elementPosition]
         recs.push(
-          <Card title={`${allData.user_proposals[i][0].name}`} image={require("../images/4.jpg")} key={`${allData.user_proposals[i][0].id}`}>
+          <Card title={`${allData.user_proposals[i][0].name}`} image={{url: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${allData.user_proposals[i][0].picture_key}&key=AIzaSyCDCTxn5r6lLxw9UsV-4ikuXxhP_q1fVys`}} key={`${allData.user_proposals[i][0].id}`}>
                 <Text style={{ marginBottom: 10 }}>
                   {this.state.allUsers ? `Recommended by: ${objectFound.first_name} ${objectFound.last_name}` : ''}
                 </Text>

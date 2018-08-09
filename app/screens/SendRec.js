@@ -38,7 +38,8 @@ class SendRecPage extends Component {
       selected: undefined, 
       userData: null,
       sendingTo: null, 
-      allUsers: null
+      allUsers: null,
+      recId: null
     };
     this.getTokenState();
     this.getUserData();
@@ -90,7 +91,10 @@ class SendRecPage extends Component {
       }
     })
     .then((res) => res.json()
-    .then(res_json => this.sendRec(res_json.id)));
+    .then(res_json => {
+      this.getPhotoReference(res_json.id);
+      this.sendRec(res_json.id);
+    }));
   }
 
   sendRec = (createdRecId) => {
@@ -111,11 +115,36 @@ class SendRecPage extends Component {
     .then((res) => res.json())
     .then(res_json => {
       if (res_json.id){
+        
         this.props.navigation.navigate("Home", alert('Reccomendation sent succesfully!'));
       }else{
         alert('Oh no! something went wrong');
       }
     });
+  }
+
+  getPhotoReference = (recId) => {
+    const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${this.state.location}&key=AIzaSyCDCTxn5r6lLxw9UsV-4ikuXxhP_q1fVys`;
+    const url2 = `https://reccme.herokuapp.com/api/reccs/${recId}`;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json' 
+      }
+    })
+    .then((res) => res.json()
+    .then((results) => fetch(url2, {
+      method: 'PUT',
+      body: JSON.stringify({"recc": {"picture_key": `${results.results[0].photos[0].photo_reference}`}}),
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Authorization': `Bearer ${this.state.token}`,
+        'Content-Type': 'application/json' 
+      }
+    })))
+    .then((res) => res.json())
+    .then((response_json) => console.log(response_json))
   }
 
   getAllUser = () => {

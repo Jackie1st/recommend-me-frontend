@@ -55,19 +55,23 @@ class ViewRecPage extends Component {
     // this.getAllComments(); 
   }
 
-  // getAllComments = async () => {
-  //   const url = `https://reccme.herokuapp.com/api/reccs/${this.state.recId}/sync_comments`;
-  //   await AsyncStorage.getItem("auth-token").then(token => fetch(url, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Cache-Control': 'no-cache',
-  //       'Authorization': `Bearer ${token}`,
-  //       'Content-Type': 'application/json'
-  //     }
-  //   }))
-  //     .then((res) => res.json()
-  //     .then((allComments) => this.setState({comments: allComments.recc_comments})));
-  // }
+  componentDidFocus(){
+    this.getAllComments();
+  }
+
+  getAllComments = async () => {
+    const url = `https://reccme.herokuapp.com/api/reccs/${this.state.recId}/sync_comments`;
+    await AsyncStorage.getItem("auth-token").then(token => fetch(url, {
+      method: 'GET',
+      headers: {
+        'Cache-Control': 'no-cache',
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    }))
+      .then((res) => res.json()
+      .then((allComments) => this.setState({comments: allComments.recc_comments})));
+  }
 
   getLatLng = () => {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${this.props.navigation.getParam('recLocation')}&key=AIzaSyCDCTxn5r6lLxw9UsV-4ikuXxhP_q1fVys`
@@ -140,6 +144,18 @@ class ViewRecPage extends Component {
 
           <Text style={styles.text}>Recommender: {this.state.allUsers ? `${objectFound.first_name} ${objectFound.last_name}` : ""}</Text>
         </Card>
+        <Button
+                  backgroundColor="#03A9F4"
+                  title="COMMENT"
+                  style={{paddingTop: 10, paddingBottom: 10}}
+                  onPress={() => this.props.navigation.navigate("makeCommentPage", {recId: recId, userId: this.props.navigation.getParam('userId')} )}
+                />
+          <Button
+                  backgroundColor="#03A9F4"
+                  title="BACK"
+                  style={{paddingTop: 10, paddingBottom: 10}}
+                  onPress={() => this.props.navigation.navigate("Home")}
+                />
         <Card>
           <Text style={styles.commentTitle}>Comments: </Text>
         </Card>
@@ -155,18 +171,7 @@ class ViewRecPage extends Component {
             ))
           }
           
-          <Button
-                  backgroundColor="#03A9F4"
-                  title="COMMENT"
-                  style={{paddingTop: 10, paddingBottom: 10}}
-                  onPress={() => this.props.navigation.navigate("makeCommentPage", {recId: recId, userId: this.props.navigation.getParam('userId')})}
-                />
-          <Button
-                  backgroundColor="#03A9F4"
-                  title="BACK"
-                  style={{paddingTop: 10, paddingBottom: 10}}
-                  onPress={() => this.props.navigation.navigate("Home")}
-                />
+          
             </ScrollView>
       </View>
       )
