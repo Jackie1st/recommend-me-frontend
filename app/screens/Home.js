@@ -40,7 +40,6 @@ export default class Home extends React.Component {
   
 
   displayed = () => {
-    console.log(this.state.token);
     if (this.state.data){
       const allData = this.state.data
       const recs = [];
@@ -60,7 +59,6 @@ export default class Home extends React.Component {
                 />
               </Card>
         );
-        console.log(allData.user_proposals[i][0]);
       }
     
     return recs

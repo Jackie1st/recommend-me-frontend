@@ -40,11 +40,9 @@ export default class SentRecs extends React.Component {
   
 
   displayed = () => {
-    console.log(this.state.token);
     if (this.state.data){
       const allData = this.state.data
       const recs = [];
-      console.log(this.state.data.user_reccs.length);
       for (let i = 0; i < allData.user_reccs.length; i++){
         const elementPosition = this.state.allUsers.map(function(x) {return x.id;}).indexOf(allData.user_reccs[i][0].user_id);
         const objectFound = this.state.allUsers[elementPosition]

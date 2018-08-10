@@ -59,7 +59,6 @@ export default class Comments extends React.Component {
     }
   }
   render(){
-    console.log(this.state.comments)
     return(
       <View>
         {this.display()}

@@ -51,8 +51,6 @@ class ViewRecPage extends Component {
       comments: this.props.navigation.getParam('comments')
     }
     this.getLatLng();
-    // this.getAllUser();
-    // this.getAllComments(); 
   }
 
   componentDidFocus(){
@@ -85,21 +83,6 @@ class ViewRecPage extends Component {
     .then(res => res.json())
     .then(response_json => {this.setState({googleApiResponse: response_json})})
   }
-
-  // getAllUser = () => {
-  //   const url = `https://reccme.herokuapp.com/api/users/sync_all`;
-  //   AsyncStorage.getItem("auth-token").then(token => fetch(url, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Cache-Control': 'no-cache',
-  //       'Authorization': `Bearer ${token}`,
-  //       'Content-Type': 'application/json'
-  //     }
-  //   }))
-  //     .then((res) => res.json())
-  //     .then((users) => this.setState({allUsers: users}));
-  // }
-
 
   display = () => {
     const recName = this.props.navigation.getParam('recName');

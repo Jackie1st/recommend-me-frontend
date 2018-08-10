@@ -67,7 +67,6 @@ export default class MakeComment extends React.Component {
   }
 
   render(){
-    console.log(this.state)
     return(
       <View style={{ flex: 1 }}>
         {this.display()}
